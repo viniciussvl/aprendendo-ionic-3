@@ -16,6 +16,8 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class IntroPage {
 
+  
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
