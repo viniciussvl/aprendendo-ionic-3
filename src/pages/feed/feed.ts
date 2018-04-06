@@ -31,6 +31,8 @@ export class FeedPage {
     time_comment: "11hrs atrás"
 
   }
+
+  public lista_filmes = new Array<any>();
   
   constructor(
     public navCtrl: NavController, 
@@ -40,7 +42,6 @@ export class FeedPage {
   }
 
   public somarDoisNumeros(num1:number, num2:number): void{
-    
     console.log(num1 + num2);
   }
 
@@ -49,12 +50,14 @@ export class FeedPage {
     this.somarDoisNumeros(5, 2);
     this.moovieProvider.get_popuplar_movies().subscribe(
       data => {
-        console.log(data);
+        const response = (data as any);
+        this.lista_filmes = response.results;
       },
       error => {
         console.log(error);
       }
     )
+    
   }
 
 }
