@@ -14,6 +14,11 @@
 
 
 <ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <h1>{{ username }}</h1>
 
   <ion-card *ngFor="let filme of lista_filmes">
@@ -35,7 +40,7 @@
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>{{ objeto_feed.likes }}</div>
+          <div>1</div>
         </button>
       </ion-col>
       <ion-col>
@@ -50,6 +55,9 @@
         </ion-note>
       </ion-col>
     </ion-row>
+
+    <button ion-button block (click)="abrirDetalhes(filme)"> Detalhes do Filme</button>
+
   </ion-card>
 
 
