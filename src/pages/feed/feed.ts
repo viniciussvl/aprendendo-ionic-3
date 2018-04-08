@@ -34,9 +34,11 @@ export class FeedPage {
   }
 
   public lista_filmes = new Array<any>();
+  public page = 1;
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
+  public infiniteScroll;
 
   constructor(
     public navCtrl: NavController, 
@@ -81,12 +83,27 @@ export class FeedPage {
     this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
   }
 
-  carregarFilmes(){
+  // Carregar mais filmes quando chegar no final da pagina
+  doInfinite(infiniteScroll) {
+    this.page++;
+    this.infiniteScroll = infiniteScroll;
+    this.carregarFilmes(true);
+    infiniteScroll.complete();
+  }
+
+  carregarFilmes(newpage: boolean = false){
     this.mostrarLoader();
-    this.moovieProvider.get_popuplar_movies().subscribe(
+    this.moovieProvider.get_popuplar_movies(this.page).subscribe(
       data => {
         const response = (data as any);
-        this.lista_filmes = response.results;
+
+        // Se for uma nova pagina ele concatena 
+        if(newpage){
+          this.lista_filmes = this.lista_filmes.concat(response.results);
+          this.infiniteScroll.complete();
+        } else{
+          this.lista_filmes = response.results;
+        }
 
         this.ocultarLoader();
         if(this.isRefreshing){
@@ -102,5 +119,7 @@ export class FeedPage {
       }
     )
   }
+
+
 
 }
